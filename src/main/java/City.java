@@ -37,7 +37,7 @@ public class City {
      * The Population.
      */
     @NonNull
-    String population;
+    int population;
     /**
      * The Foundation.
      */

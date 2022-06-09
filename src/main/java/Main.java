@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 /**
  * The type Main.
- *
  */
 public class Main{
     /**
@@ -20,6 +19,7 @@ public class Main{
      * @param args the args
      */
     public static void main(String[] args){
-
+        City[] cities = CityUtils.toArrayListOfCities(CityUtils.GetListCitiesFromTxtFile());
+        CityUtils.printCityWithMaxPopulation(cities);
     }
 }
