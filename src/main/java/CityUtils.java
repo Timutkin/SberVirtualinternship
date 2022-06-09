@@ -7,11 +7,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The type City utils.
+ * @author Timofey Utkin
+ * @version 1.0
+ * 09.06.2022
+ */
 public class CityUtils {
 
+    /*
+     * The constant THE_PATH_TO_THE_LIST_OS_CITIES which
+     * specifies the path to the file with the cities
+     */
     private  static final Path THE_PATH_TO_THE_LIST_OS_CITIES = Paths.get("src/main/resources/Сity_ru.txt");
 
-
+    /*
+     * Get list cities from txt file list.
+     *
+     * @return the list
+     */
     protected static List<City> GetListCitiesFromTxtFile() {
         List<City> cities = new ArrayList<>();
         try (Scanner scanner = new Scanner(THE_PATH_TO_THE_LIST_OS_CITIES)){
@@ -26,10 +40,21 @@ public class CityUtils {
 
     }
 
+    /**
+     * Print cities.
+     *
+     * @param cities the cities
+     */
     public static void printCities(List<City> cities){
         cities.forEach(System.out::println);
     }
 
+    /*
+     * Parse city.
+     *
+     * @param line the line
+     * @return {@link City}
+     */
     private static City parse(String line){
        try(Scanner scanner = new Scanner(line)){
            scanner.useDelimiter(";");
@@ -47,19 +72,28 @@ public class CityUtils {
     }
 
 
+    /*
+     * Sorted cities by district and name list.
+     *
+     * @param cities the cities
+     * @return the list
+     */
     protected static List<City> sortedCitiesByDistrictAndName(@NonNull List<City> cities) {
         Stream<City> cityStream = cities.stream().sorted(Comparator.comparing(City::getDistrict).thenComparing(City::getName));
         List<City> sortedListOfCities = cityStream.collect(Collectors.toList());
         return sortedListOfCities;
     }
 
-
+    /*
+     * Sorted cities by name list.
+     *
+     * @param cities the cities
+     * @return the sorted list by name
+     */
     protected static List<City> sortedCitiesByName(@NonNull List<City> cities) {
         Stream<City> cityStream = cities.stream().sorted(Comparator.comparing(o1-> o1.getName().toLowerCase(Locale.ROOT)));
         List<City> sortedListOfCities = cityStream.collect(Collectors.toList());
         return sortedListOfCities;
     }
-
-
 
 }

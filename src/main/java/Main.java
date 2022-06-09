@@ -9,9 +9,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Main.
+ *
+ */
 public class Main{
-    public static void main(String[] args) throws IOException {
-        List<City> cityList = CityUtils.GetListCitiesFromTxtFile();
-        CityUtils.printCities(CityUtils.sortedCitiesByDistrictAndName(cityList));
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
+    public static void main(String[] args){
+
     }
 }
