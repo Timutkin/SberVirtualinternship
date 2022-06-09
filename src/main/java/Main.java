@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class Main{
     public static void main(String[] args) throws IOException {
-        CityUtils.printCities(CityUtils.GetListCitiesFromTxtFile());
+        List<City> cityList = CityUtils.GetListCitiesFromTxtFile();
+        CityUtils.printCities(CityUtils.sortedCitiesByDistrictAndName(cityList));
     }
 }

@@ -1,9 +1,11 @@
+import lombok.NonNull;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CityUtils {
 
@@ -23,6 +25,7 @@ public class CityUtils {
         return cities;
 
     }
+
     public static void printCities(List<City> cities){
         cities.forEach(System.out::println);
     }
@@ -42,5 +45,21 @@ public class CityUtils {
            return new City(name, region, district, population, foundation);
        }
     }
+
+
+    protected static List<City> sortedCitiesByDistrictAndName(@NonNull List<City> cities) {
+        Stream<City> cityStream = cities.stream().sorted(Comparator.comparing(City::getDistrict).thenComparing(City::getName));
+        List<City> sortedListOfCities = cityStream.collect(Collectors.toList());
+        return sortedListOfCities;
+    }
+
+
+    protected static List<City> sortedCitiesByName(@NonNull List<City> cities) {
+        Stream<City> cityStream = cities.stream().sorted(Comparator.comparing(o1-> o1.getName().toLowerCase(Locale.ROOT)));
+        List<City> sortedListOfCities = cityStream.collect(Collectors.toList());
+        return sortedListOfCities;
+    }
+
+
 
 }
