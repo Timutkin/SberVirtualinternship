@@ -2,9 +2,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * The type Main.
@@ -17,9 +19,7 @@ public class Main{
      */
     public static void main(String[] args){
         List<City> cities = CityUtils.GetListCitiesFromTxtFile();
-        findByInsertionSort(cities);
-        findBySimpleBruteForce(cities);
-        findMaxPopulation(cities);
+        findCountOfCityInEachRegion(cities);
     }
 
     /**
@@ -76,6 +76,19 @@ public class Main{
             }
         }
         System.out.println(String.format("[%d]=%d",mass.length-1, mass[mass.length-1].getPopulation()));
+    }
+
+    /**
+     * Find count of city in each region.
+     *
+     * @param cities the cities
+     */
+    private static void findCountOfCityInEachRegion(List<City> cities){
+        Map<String, Long> groupOfRegions = cities.stream()
+                .collect(Collectors.groupingBy(City::getRegion, Collectors.counting()));
+        for (Map.Entry<String,Long> map : groupOfRegions.entrySet()){
+            System.out.println(MessageFormat.format("{0} - {1} ",map.getKey(), map.getValue()));
+        }
     }
 
 }
