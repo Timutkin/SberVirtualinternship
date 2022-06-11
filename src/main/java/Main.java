@@ -2,10 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +16,66 @@ public class Main{
      * @param args the args
      */
     public static void main(String[] args){
-        City[] cities = CityUtils.toArrayListOfCities(CityUtils.GetListCitiesFromTxtFile());
-        CityUtils.printCityWithMaxPopulation(cities);
+        List<City> cities = CityUtils.GetListCitiesFromTxtFile();
+        findByInsertionSort(cities);
+        findBySimpleBruteForce(cities);
+        findMaxPopulation(cities);
     }
+
+    /**
+     * Find by simple brute force.
+     *
+     * @param cities the cities
+     */
+    private static void findBySimpleBruteForce(List<City> cities){
+        City[] mass = CityUtils.toArrayListOfCities(cities);
+        short indexOfCityWithMaxPopulation = 0;
+        int maxPopulation = mass[0].getPopulation();
+        for (int i = 1; i < mass.length ; i++) {
+            if (mass[i].getPopulation() > maxPopulation){
+                maxPopulation = mass[i].getPopulation();
+                indexOfCityWithMaxPopulation = (short) i;
+            }
+        }
+        System.out.println(String.format("[%d]=%d", indexOfCityWithMaxPopulation, maxPopulation));
+    }
+
+    /**
+     * Find max population.
+     *
+     * @param cities the cities
+     */
+    private static void findMaxPopulation(List<City> cities) {
+        System.out.println(cities.stream().max(Comparator.comparing(City::getPopulation)));
+    }
+
+    /**
+     * Swap.
+     *
+     * @param <T>         the type parameter
+     * @param elements    the elements
+     * @param firstIndex  the first index
+     * @param secondIndex the second index
+     */
+    private static <T> void swap(T[] elements, int firstIndex, int secondIndex){
+        T temp = elements[firstIndex];
+        elements[firstIndex] = elements[secondIndex];
+        elements[secondIndex] = temp;
+    }
+
+    /**
+     * Find by insertion sort.
+     *
+     * @param cities the cities
+     */
+    private static void findByInsertionSort(List<City> cities) {
+        City[] mass = CityUtils.toArrayListOfCities(cities);
+        for (int i = 0; i < mass.length ; i++) {
+            for (int j = i; j > 0 && mass[j-1].getPopulation()> mass[j].getPopulation(); j--) {
+                swap(mass, j, j-1);
+            }
+        }
+        System.out.println(String.format("[%d]=%d",mass.length-1, mass[mass.length-1].getPopulation()));
+    }
+
 }
